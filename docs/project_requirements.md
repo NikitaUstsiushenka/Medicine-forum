@@ -18,16 +18,12 @@
 
 ### 2.1 Интерфейс пользователя
 
-- Стартовая страница
-  ![Main](mockups/start_page.png)
-- Страница клиента
-  ![ClientPage](mockups/client_page.png)
+- Страница авторизации
+  ![Authorization](mockups/Authorization.png)
+- Страница гостя
+  ![ClientPage](mockups/Main.png)
 - Страница администратора
-  ![AdministratorPage](mockups/administrator_page.png)
-- Модальное окно регистрации пользователя
-  ![RegistrationModal](mockups/registration_modal.png)
-- Модальное окно авторизации
-  ![SigninModal](mockups/signin_modal.png)
+  ![Administrator](mockups/Administrator.png)
 
 ### Характеристики пользователей
 
