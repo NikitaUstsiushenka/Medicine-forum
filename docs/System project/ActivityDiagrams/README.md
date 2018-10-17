@@ -14,7 +14,7 @@
 <a name="search"/>
 
 # 2 Поиск препарата
-![Поиск препарата](Search.png)
+![Поиск препарата](Search.png)  
 
 <a name="logout"/>
 
