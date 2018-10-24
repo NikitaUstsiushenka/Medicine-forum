@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="304c90df-ebf1-43f0-80e9-8ba506555b67" name="Default" comment="" />
+    <list default="true" id="6c91534b-3c76-479f-b8e2-0706d48cea47" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Medicine-forum.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Medicine-forum.iml" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -30,8 +37,8 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-10" />
-    <option name="y" value="-10" />
+    <option name="x" value="-60" />
+    <option name="y" value="115" />
     <option name="width" value="1940" />
     <option name="height" value="1060" />
   </component>
@@ -40,24 +47,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="Medicine-forum" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Medicine-forum" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Medicine-forum" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Medicine-forum" type="462c0819:PsiDirectoryNode" />
-              <item name="docs" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
+      <pane id="ProjectPane" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="AndroidView" />
     </panes>
   </component>
@@ -127,25 +119,17 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="304c90df-ebf1-43f0-80e9-8ba506555b67" name="Default" comment="" />
-      <created>1539255616996</created>
+      <changelist id="6c91534b-3c76-479f-b8e2-0706d48cea47" name="Default" comment="" />
+      <created>1539769654831</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1539255616996</updated>
-      <workItem from="1539255618496" duration="94000" />
+      <updated>1539769654831</updated>
+      <workItem from="1539769656422" duration="601000" />
     </task>
-    <task id="LOCAL-00001" summary="updated mockups">
-      <created>1539255697568</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1539255697568</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="94000" />
+    <option name="totallyTimeSpent" value="601000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="878" extended-state="6" />
@@ -176,8 +160,8 @@
       <window_info anchor="bottom" id="Log4jMonitor" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
     </layout>
@@ -187,10 +171,6 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="updated mockups" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated mockups" />
   </component>
   <component name="masterDetails">
     <states>
@@ -211,7 +191,7 @@
   <component name="simpleUML.UMLToolWindowPlugin">
     <General>
       <option name="birdViewUpdateDelay" value="2000" />
-      <option name="defaultFileLocation" value="file://$PROJECT_DIR$/.." />
+      <option name="defaultFileLocation" value="file://D:/" />
     </General>
     <Classdiagram>
       <option name="diagramTitleFont" value="SansSerif,1,12" />
