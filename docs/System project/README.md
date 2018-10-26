@@ -3,5 +3,5 @@
 
 # Содержание
 1 [Диаграмма вариантов использования](UseCase/README.md)  
-2 [Диаграмма классов](ClassDiagram/README.md)  
+2 [Диаграммы последовательностей](SequenceDiagrams/README.md)  
 3 [Диаграммы активностей](ActivityDiagrams/README.md)
