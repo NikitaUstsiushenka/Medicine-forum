@@ -1,11 +1,10 @@
 <component name="libraryTable">
   <library name="lib">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/.idea/checkstyleidea-libs/web/WEB-INF/lib/log4j-core-2.11.0.jar!/" />
-      <root url="jar://$PROJECT_DIR$/.idea/checkstyleidea-libs/web/WEB-INF/lib/javax.servlet.jsp.jstl-1.2.1.jar!/" />
-      <root url="jar://$PROJECT_DIR$/.idea/checkstyleidea-libs/web/WEB-INF/lib/log4j-api-2.11.0.jar!/" />
+      <root url="file://$PROJECT_DIR$/web/WEB-INF/lib" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/web/WEB-INF/lib" recursive="false" />
   </library>
 </component>

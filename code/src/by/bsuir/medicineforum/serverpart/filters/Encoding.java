@@ -57,8 +57,6 @@ public final class Encoding implements Filter {
         if (this.code != null && !this.code.equalsIgnoreCase(codeRequest)) {
 
             request.setCharacterEncoding(this.code);
-            response.setCharacterEncoding(this.code);
-
             logger.log(Level.DEBUG, debugString);
 
         }
