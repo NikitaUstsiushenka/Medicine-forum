@@ -1,7 +1,14 @@
 package by.bsuir.medicineforum.database.dao;
 
+import by.bsuir.medicineforum.database.pool.ConnectionPool;
 import by.bsuir.medicineforum.entity.AbstractEntity;
+import by.bsuir.medicineforum.exception.ApplicationException;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.Logger;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -14,9 +21,14 @@ import java.util.List;
 public abstract class AbstractDao<T extends AbstractEntity> {
 
     /**
-     * Protected default constructor.
+     * Logger for debug and error.
      */
-    protected AbstractDao() {
+    private static Logger logger;
+
+    /**
+     * Private-package default constructor.
+     */
+    AbstractDao() {
 
     }
 
@@ -40,5 +52,40 @@ public abstract class AbstractDao<T extends AbstractEntity> {
      * @param object value of the object that extends AbstractEntity class
      */
     protected abstract void update(T object);
+
+    /**
+     * This method close connection with database.
+     *
+     * @param connection value of the object Connection
+     */
+    protected void close(final Connection connection) {
+
+        try {
+            ConnectionPool.getInstance().freeConnection(connection);
+        } catch (ApplicationException e) {
+
+            e.printStackTrace();
+            logger.log(Level.ERROR, e.getMessage());
+
+        }
+
+    }
+
+    /**
+     * This method closes statement.
+     *
+     * @param statement value of the object PreparedStatement
+     * @throws ApplicationException throw SQLException
+     */
+    protected void close(final PreparedStatement statement)
+            throws ApplicationException {
+
+        try {
+            statement.close();
+        } catch (SQLException e) {
+            throw new ApplicationException(e.getMessage());
+        }
+
+    }
 
 }

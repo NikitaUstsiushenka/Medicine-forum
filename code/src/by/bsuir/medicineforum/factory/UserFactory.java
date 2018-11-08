@@ -51,13 +51,26 @@ public final class UserFactory implements EntityFactory<User> {
      * {@inheritDoc}
      */
     @Override
-    public User createEntity(final HttpServletRequest request)
-            throws ApplicationException {
+    public User createEntity(final HttpServletRequest request) {
 
-        final String errorString
-                = " Object User can't be create from request.";
+        final User user = new User();
+        final String debugString;
 
-        throw new ApplicationException(errorString);
+        if (request != null) {
+
+            user.setLogin((String) request.getAttribute("login"));
+            user.setPassword((String) request.getAttribute("pass"));
+
+            debugString = " Object User " + user + " created from request.";
+
+        } else {
+            debugString = " Attribute is null in method "
+                    + "createEntity(HttpServletRequest).";
+        }
+
+        logger.log(Level.DEBUG, debugString);
+
+        return user;
 
     }
 

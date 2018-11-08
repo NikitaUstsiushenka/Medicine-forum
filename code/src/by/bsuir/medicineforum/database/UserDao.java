@@ -1,10 +1,17 @@
 package by.bsuir.medicineforum.database;
 
 import by.bsuir.medicineforum.database.dao.AbstractUserDao;
+import by.bsuir.medicineforum.database.pool.ConnectionPool;
 import by.bsuir.medicineforum.entity.User;
+import by.bsuir.medicineforum.exception.ApplicationException;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +64,72 @@ public final class UserDao extends AbstractUserDao {
      */
     @Override
     public void update(final User user) {
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isExist(final String login, final String password)
+            throws ApplicationException {
+
+        final String sqlQuery = "SELECT * FROM `user` u WHERE u.`login` = ? "
+                + "AND u.`password` = ?";
+        final String debugString;
+        final ResultSet resultSet;
+
+        boolean result = false;
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+
+            connection = ConnectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(sqlQuery);
+
+            statement.setString(1, login);
+            statement.setString(2, password);
+
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+
+                result = true;
+                debugString = " User with login " + login + " and password"
+                        + password + " is existence ";
+
+            } else {
+
+                debugString = " User with login " + login + " and password"
+                        + password + " doesn't exist.";
+
+            }
+
+            logger.log(Level.DEBUG, debugString);
+
+        } catch (ApplicationException e) {
+
+            e.printStackTrace();
+            logger.log(Level.ERROR, e.getMessage());
+
+        } catch (SQLException e) {
+            throw new ApplicationException(e.getMessage());
+        } finally {
+
+            try {
+                super.close(statement);
+            } catch (ApplicationException e) {
+
+                e.printStackTrace();
+                logger.log(Level.ERROR, e.getMessage());
+
+            }
+            super.close(connection);
+
+        }
+
+        return result;
 
     }
 

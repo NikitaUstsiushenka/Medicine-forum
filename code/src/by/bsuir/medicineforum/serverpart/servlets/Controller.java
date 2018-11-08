@@ -1,6 +1,8 @@
 package by.bsuir.medicineforum.serverpart.servlets;
 
 import by.bsuir.medicineforum.exception.ApplicationException;
+import by.bsuir.medicineforum.serverpart.action.Action;
+import by.bsuir.medicineforum.serverpart.action.Authorization;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -72,6 +74,7 @@ public final class Controller extends HttpServlet {
     private void process(final HttpServletRequest request,
                          final HttpServletResponse response) throws ApplicationException {
 
+        final Action action;
         final String clientAction = (String) request.getAttribute("action");
         final String errorString = "";
         final String debugString = "";
@@ -81,6 +84,8 @@ public final class Controller extends HttpServlet {
             switch (clientAction) {
 
                 case "singin":
+                    action = new Authorization();
+                    action.execute(request, response);
                     break;
                 default:
                     throw new ApplicationException(errorString);
