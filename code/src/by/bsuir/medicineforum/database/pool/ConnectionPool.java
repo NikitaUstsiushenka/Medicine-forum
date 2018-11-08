@@ -120,6 +120,8 @@ public final class ConnectionPool {
      */
     public Connection getConnection() throws ApplicationException {
 
+        final String debugString = " Connection returned.";
+
         Connection connection = null;
 
         locker.lock();
@@ -149,7 +151,31 @@ public final class ConnectionPool {
             locker.unlock();
         }
 
+        logger.log(Level.DEBUG, debugString);
+
         return connection;
+
+    }
+
+    /**
+     * This method adds connection in pool.
+     *
+     * @param connection value of the object Connection
+     * @throws ApplicationException throw InterruptedException
+     */
+    public void freeConnection(final Connection connection)
+            throws ApplicationException {
+
+        final String debugString = " Connection added in pool.";
+
+        try {
+
+            this.connections.put(connection);
+            logger.log(Level.DEBUG, debugString);
+
+        } catch (InterruptedException e) {
+            throw new ApplicationException(e.getMessage());
+        }
 
     }
 
