@@ -30,6 +30,18 @@ public final class UserDao extends AbstractUserDao {
     private static Logger logger;
 
     /**
+     * Value of the query that checks user.
+     */
+    private static final String EXIST_USER;
+
+    static {
+
+        EXIST_USER = "SELECT * FROM `user` WHERE `login` = ? "
+                + "AND `password` = sha2(?, 256)";
+
+    }
+
+    /**
      * Public default constructor.
      */
     public UserDao() {
@@ -74,8 +86,6 @@ public final class UserDao extends AbstractUserDao {
     public boolean isExist(final String login, final String password)
             throws ApplicationException {
 
-        final String sqlQuery = "SELECT * FROM `user` u WHERE u.`login` = ? "
-                + "AND u.`password` = ?";
         final String debugString;
         final ResultSet resultSet;
 
@@ -86,7 +96,7 @@ public final class UserDao extends AbstractUserDao {
         try {
 
             connection = ConnectionPool.getInstance().getConnection();
-            statement = connection.prepareStatement(sqlQuery);
+            statement = connection.prepareStatement(EXIST_USER);
 
             statement.setString(1, login);
             statement.setString(2, password);
@@ -125,6 +135,7 @@ public final class UserDao extends AbstractUserDao {
                 logger.log(Level.ERROR, e.getMessage());
 
             }
+
             super.close(connection);
 
         }

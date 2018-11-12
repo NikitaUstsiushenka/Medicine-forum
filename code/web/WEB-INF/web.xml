@@ -7,12 +7,27 @@
     <welcome-file-list>
         <welcome-file>/index.jsp</welcome-file>
     </welcome-file-list>
+    <servlet>
+        <servlet-name>Controller</servlet-name>
+        <servlet-class>by.bsuir.medicineforum.serverpart.servlets.Controller</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Controller</servlet-name>
+        <url-pattern>/pharmacy</url-pattern>
+    </servlet-mapping>
     <filter>
         <filter-name>Encoding</filter-name>
         <filter-class>by.bsuir.medicineforum.serverpart.filters.Encoding</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
     </filter>
     <filter-mapping>
         <filter-name>Encoding</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    <session-config>
+        <session-timeout>200</session-timeout>
+    </session-config>
 </web-app>

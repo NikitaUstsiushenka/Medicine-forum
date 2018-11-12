@@ -18,16 +18,18 @@
     <div id="title">
         <h3><c:out value="Sign in"/></h3>
     </div>
-    <form action="" method="post">
-        <p><label for="login"><c:out value="Login: "/></label><input type="text" class="form-control" id="login" name="login"
-                                                                     placeholder="Enter login" required/></p>
-        <p><label for="password"><c:out value="Password: "/></label><input type="password" class="form-control" name="pass"
-                                                                           id="password" placeholder="Enter password"
+    <form action="pharmacy" method="post">
+        <input type="hidden" name="action" value="signin">
+        <p><label for="login"><c:out value="Login: "/></label><input type="text" class="form-control" id="login"
+                                                                     name="login" placeholder="Enter login" required/>
+        </p>
+        <p><label for="password"><c:out value="Password: "/></label><input type="password" class="form-control"
+                                                                           name="pass" id="password"
+                                                                           placeholder="Enter password"
                                                                            required/></p>
         <p>
             <button class="btn btn-info" type="submit"><c:out value="Sign in"/></button>
         </p>
-        <input type="hidden" name="action" value="signin">
     </form>
     <p><a href=""><c:out value="Continue without authorization?"/></a></p>
 </div>

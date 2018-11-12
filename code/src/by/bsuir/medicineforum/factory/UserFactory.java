@@ -58,8 +58,8 @@ public final class UserFactory implements EntityFactory<User> {
 
         if (request != null) {
 
-            user.setLogin((String) request.getAttribute("login"));
-            user.setPassword((String) request.getAttribute("pass"));
+            user.setLogin((request.getParameter("login")));
+            user.setPassword(request.getParameter("pass"));
 
             debugString = " Object User " + user + " created from request.";
 

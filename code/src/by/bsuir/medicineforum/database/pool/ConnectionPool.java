@@ -5,7 +5,6 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -14,38 +13,38 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * This class stores connections for database.
+ * This class stores and complete connections to the DataBase.
  *
  * @author Nikita
  * @version 1.0
- * @since 04.11.2018
+ * @since 11.09.2018
  */
 public final class ConnectionPool {
 
     /**
-     * Logger for debug.
+     * Logger for debug and errors.
      */
-    private static Logger logger;
+    private static final Logger LOGGER;
 
     /**
-     * Value of the single object ConnectionPool.
+     * Value of the object ConnectionPool.
      */
     private static ConnectionPool instance;
 
     /**
-     * Value of the object ReentrantLock.
+     * Value of the object ReentrantLocker.
      */
     private static ReentrantLock locker;
 
     /**
-     * List of connections.
+     * Queue of the connections.
      */
     private BlockingQueue<Connection> connections;
 
     /**
-     * Value of the database class.
+     * Value of the driver class.
      */
-    private static final String DB_CLASS;
+    private static final String DRIVER_CLASS;
 
     /**
      * Value of the database url.
@@ -53,44 +52,41 @@ public final class ConnectionPool {
     private static final String DB_URL;
 
     /**
-     * Value of the database user name.
+     * Value of the database user.
      */
     private static final String DB_USER;
 
     /**
-     * Value of the database user password.
+     * Value of the user password.
      */
-    private static final String DB_PASSS;
+    private static final String DB_PASSWORD;
 
     static {
 
-        DB_CLASS = "com.mysql.jdbc.Driver";
-        DB_URL = "jdbc:mysql//localhost:3306/medicine-forum";
+        DRIVER_CLASS = "com.mysql.jdbc.Driver";
+        DB_URL = "jdbc:mysql://localhost:3306/medicine-forum";
         DB_USER = "root";
-        DB_PASSS = "Nikita09061999";
+        DB_PASSWORD = "Nikita09061999";
 
+        LOGGER = LogManager.getLogger(ConnectionPool.class);
+        locker = new ReentrantLock();
+        try {
+            Class.forName(DRIVER_CLASS);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            LOGGER.log(Level.ERROR, e.getMessage());
+        }
     }
 
     /**
      * Private default constructor.
      */
     private ConnectionPool() {
-
         this.connections = new LinkedBlockingQueue<>();
-        logger = LogManager.getLogger(ConnectionPool.class);
-        locker = new ReentrantLock();
-
-        try {
-            Class.forName(DB_CLASS);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            logger.log(Level.ERROR, e.getMessage());
-        }
-
     }
 
     /**
-     * This method returns single object ConnectionPool.
+     * This method return value of the single object ConnectionPool.
      *
      * @return value of the object ConnectionPool
      */
@@ -99,11 +95,9 @@ public final class ConnectionPool {
         locker.lock();
 
         try {
-
             if (instance == null) {
                 instance = new ConnectionPool();
             }
-
         } finally {
             locker.unlock();
         }
@@ -113,14 +107,12 @@ public final class ConnectionPool {
     }
 
     /**
-     * This method returns connection from pool.
+     * This method return value of the object Connection.
      *
      * @return value of the object Connection
-     * @throws ApplicationException throw SQLException or InterruptedException
+     * @throws ApplicationException if we have exceptions with connections
      */
     public Connection getConnection() throws ApplicationException {
-
-        final String debugString = " Connection returned.";
 
         Connection connection = null;
 
@@ -130,49 +122,50 @@ public final class ConnectionPool {
 
             while (connection == null) {
 
-                if (this.connections.isEmpty()) {
-                    connection = DriverManager
-                            .getConnection(DB_URL, DB_USER, DB_PASSS);
-                } else {
+                try {
 
-                    connection = this.connections.take();
-
-                    if (!connection.isValid(0)) {
-                        connection = null;
+                    if (this.connections.isEmpty()) {
+                        connection = DriverManager.getConnection(
+                                DB_URL,
+                                DB_USER,
+                                DB_PASSWORD);
+                    } else {
+                        connection = this.connections.take();
+                        if (!connection.isValid(0)) {
+                            connection = null;
+                        }
                     }
 
+                } catch (InterruptedException e) {
+
+                    e.printStackTrace();
+                    throw new ApplicationException(e.getMessage());
+
+                } catch (SQLException e) {
+                    throw new ApplicationException(e.getMessage());
                 }
 
             }
 
-        } catch (SQLException | InterruptedException e) {
-            throw new ApplicationException();
         } finally {
             locker.unlock();
         }
-
-        logger.log(Level.DEBUG, debugString);
 
         return connection;
 
     }
 
     /**
-     * This method adds connection in pool.
+     * Add connection in pool.
      *
      * @param connection value of the object Connection
-     * @throws ApplicationException throw InterruptedException
+     * @throws ApplicationException if problem with threads
      */
     public void freeConnection(final Connection connection)
             throws ApplicationException {
 
-        final String debugString = " Connection added in pool.";
-
         try {
-
             this.connections.put(connection);
-            logger.log(Level.DEBUG, debugString);
-
         } catch (InterruptedException e) {
             throw new ApplicationException(e.getMessage());
         }

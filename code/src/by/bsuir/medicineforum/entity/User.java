@@ -160,7 +160,7 @@ public final class User extends AbstractEntity {
         final String debugString
                 = " Attribute is null in method setPassword(String).";
 
-        if (password != null) {
+        if (newPassword != null) {
             this.password = newPassword;
         } else {
             logger.log(Level.DEBUG, debugString);

@@ -7,9 +7,11 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Servlet controller.
@@ -40,7 +42,8 @@ public final class Controller extends HttpServlet {
      */
     @Override
     public void doPost(final HttpServletRequest request,
-                       final HttpServletResponse response) {
+                       final HttpServletResponse response)
+            throws IOException, ServletException {
 
         try {
             this.process(request, response);
@@ -58,7 +61,8 @@ public final class Controller extends HttpServlet {
      */
     @Override
     public void doGet(final HttpServletRequest request,
-                      final HttpServletResponse response) {
+                      final HttpServletResponse response)
+            throws IOException, ServletException {
 
         try {
             this.process(request, response);
@@ -72,10 +76,11 @@ public final class Controller extends HttpServlet {
     }
 
     private void process(final HttpServletRequest request,
-                         final HttpServletResponse response) throws ApplicationException {
+                         final HttpServletResponse response)
+            throws ApplicationException, IOException, ServletException {
 
         final Action action;
-        final String clientAction = (String) request.getAttribute("action");
+        final String clientAction = request.getParameter("action");
         final String errorString = "";
         final String debugString = "";
 
@@ -83,10 +88,13 @@ public final class Controller extends HttpServlet {
 
             switch (clientAction) {
 
-                case "singin":
+                case "signin":
                     action = new Authorization();
                     action.execute(request, response);
                     break;
+                case "logout":
+                    request.getSession().removeAttribute("user");
+                    request.getRequestDispatcher("/main.jsp").forward(request, response);
                 default:
                     throw new ApplicationException(errorString);
 
