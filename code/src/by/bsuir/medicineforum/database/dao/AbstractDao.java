@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 /**
@@ -36,15 +37,17 @@ public abstract class AbstractDao<T extends AbstractEntity> {
      * This method selects some elements from database.
      *
      * @return list of objects that extend AbstractEntity class
+     * @throws ApplicationException throws SQLException
      */
-    protected abstract List<T> select();
+    protected abstract List<T> select() throws ApplicationException;
 
     /**
      * This method inserts some element in database.
      *
      * @param object value of the object that extends AbstractEntity clas
+     * @throws ApplicationException throw SQLException
      */
-    protected abstract void insert(T object);
+    protected abstract void insert(T object) throws ApplicationException;
 
     /**
      * This method updates some element from database.
@@ -74,10 +77,10 @@ public abstract class AbstractDao<T extends AbstractEntity> {
     /**
      * This method closes statement.
      *
-     * @param statement value of the object PreparedStatement
+     * @param statement value of the object Statement
      * @throws ApplicationException throw SQLException
      */
-    protected void close(final PreparedStatement statement)
+    protected void close(final Statement statement)
             throws ApplicationException {
 
         try {

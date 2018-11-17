@@ -120,8 +120,10 @@
 <main>
     <div id="menu_title"><h2><c:out value="Administrator menu"/></h2></div>
     <div id="show_medicines">
-        <button class="btn btn-info menu" data-toggle="modal" data-target="#modal_create_drug"
-                title="Show medicines from database"><c:out value="Show Medicines"/></button>
+        <form method="get" action="pharmacy">
+            <input type="hidden" name="action" value="show_medicines">
+            <button class="btn btn-info menu"><c:out value="Show Medicines"/></button>
+        </form>
     </div>
     <div id="add_medicine">
         <button class="btn btn-info menu" data-toggle="modal" data-target="#modal_add_medicine"

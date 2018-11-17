@@ -1,8 +1,7 @@
 package by.bsuir.medicineforum.serverpart.servlets;
 
 import by.bsuir.medicineforum.exception.ApplicationException;
-import by.bsuir.medicineforum.serverpart.action.Action;
-import by.bsuir.medicineforum.serverpart.action.Authorization;
+import by.bsuir.medicineforum.serverpart.action.*;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -94,7 +93,23 @@ public final class Controller extends HttpServlet {
                     break;
                 case "logout":
                     request.getSession().removeAttribute("user");
-                    request.getRequestDispatcher("/main.jsp").forward(request, response);
+                    request.getRequestDispatcher("/index.jsp").forward(request, response);
+                    break;
+                case "delete_medicine":
+                    action = new DeletingMedicine();
+                    action.execute(request, response);
+                    break;
+                case "show_medicines":
+                    action = new ShowingMedicines();
+                    action.execute(request, response);
+                    break;
+                case "add_medicine":
+                    action = new AddingMedicine();
+                    action.execute(request, response);
+                    break;
+                case "change_medicine":
+                    action = new ChangingMedicine();
+                    action.execute(request, response);
                 default:
                     throw new ApplicationException(errorString);
 
