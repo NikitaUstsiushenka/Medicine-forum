@@ -23,54 +23,24 @@
             <div class="modal-body">
                 <form method="post" action="pharmacy">
                     <div class="form-group">
-                        <label for="name"><c:out value="Name:"/></label>
-                        <input type="text" class="form-control" pattern="[A-Z]{1}[a-zA-Z-]*" name="name" id="name"
+                        <label for="drug_name"><c:out value="Name:"/></label>
+                        <input type="text" class="form-control" pattern="[A-Z]{1}[a-zA-Z-]*" name="drug_name"
+                               id="drug_name"
                                maxlength="35" placeholder="Enter medicine name" required>
                     </div>
                     <div class="form-group">
-                        <label for="type"><c:out value="Type:"/></label>
-                        <input type="text" class="form-control" pattern="[A-Z]{1}[a-z]*" name="type" id="type"
-                               maxlength="8"
-                               placeholder="Enter medicine type" required>
+                        <label for="drug_name"><c:out value="Substance:"/></label>
+                        <input type="text" class="form-control" pattern="[A-Z]{1}[a-zA-Z-]*" name="substance_name"
+                               id="substance_name"
+                               maxlength="20" placeholder="Enter substance name" required>
                     </div>
                     <div class="form-group">
-                        <label for="dosage"><c:out value="Dosage(Mg):"/></label>
-                        <input type="number" class="form-control" name="dosage" id="dosage" min="1" max="20000"
-                               maxlength="5" placeholder="Enter medicine dosage" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="company"><c:out value="Company:"/></label>
-                        <input type="text" class="form-control" pattern="[A-Z]{1}[a-z]*" name="company" id="company"
-                               maxlength="35" placeholder="Enter medicine company" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="country"><c:out value="Country:"/></label>
-                        <input type="text" class="form-control" pattern="[A-Z]{1}[a-z]*" name="country" id="country"
-                               maxlength="25" placeholder="Enter company country" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="substance"><c:out value="Substance:"/></label>
-                        <input type="text" class="form-control" pattern="[A-Z]{1}[a-z]*" name="substance" id="substance"
-                               maxlength="35" placeholder="Enter substance name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="recipe"><c:out value="Recipe(0-No, 1-Yes):"/></label>
-                        <input type="number" class="form-control" name="recipe" id="recipe" max="1" min="0"
-                               placeholder="Need a recipe" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="price"><c:out value="Price:"/></label>
-                        <input type="text" class="form-control" pattern="[0-9.]*" name="price" id="price"
-                               placeholder="Enter medicine price" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="count"><c:out value="Count:"/></label>
-                        <input type="number" class="form-control" name="count" id="count" min="1"
-                               placeholder="Enter medicine count" required>
+                        <label for="description"><c:out value="Description:"/></label>
+                        <textarea class="form-control" rows="5" id="description" name="description"></textarea>
                     </div>
                     <div>
-                        <input type="hidden" name="action" value="create_drug">
-                        <input type="submit" class="btn btn-info" value="Create">
+                        <input type="hidden" name="action" value="add_medicine">
+                        <input type="submit" class="btn btn-info" value="Add">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </form>
@@ -88,9 +58,6 @@
             <div class="modal-body">
                 <form method="post" action="pharmacy">
                     <div class="form-group">
-                        <label for="drug_name"><c:out value="Name:"/></label>
-                        <input type="text" class="form-control" pattern="[A-Z]{1}[a-zA-Z-]*" name="name" id="drug_name"
-                               maxlength="35" placeholder="Enter medicine name" required>
                     </div>
                     <div class="form-group">
                         <label for="drug_dosage"><c:out value="Dosage(Mg):"/></label>
@@ -126,11 +93,11 @@
         </form>
     </div>
     <div id="add_medicine">
-        <button class="btn btn-info menu" data-toggle="modal" data-target="#modal_add_medicine"
-                title="Add new medicine in database"><c:out value="Add Medicine"/></button>
+        <button class="btn btn-info menu" data-toggle="modal" data-target="#modal_add_drug"
+                title="Add medicine in database"><c:out value="Add Medicine"/></button>
     </div>
     <div id="delete_medicine">
-        <button class="btn btn-info menu" data-toggle="modal" data-target="#modal_add_drugs"
+        <button class="btn btn-info menu"
                 title="Delete medicine from database"><c:out value="Delete Medicine"/></button>
     </div>
     <div id="change_medicine">

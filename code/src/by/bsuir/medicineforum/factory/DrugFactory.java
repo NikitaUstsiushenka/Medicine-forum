@@ -1,12 +1,14 @@
 package by.bsuir.medicineforum.factory;
 
 import by.bsuir.medicineforum.entity.Drug;
+import by.bsuir.medicineforum.entity.Substance;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * This class implements methods createEntity for drug.
@@ -52,7 +54,14 @@ public final class DrugFactory implements EntityFactory<Drug> {
     public Drug createEntity(final HttpServletRequest request) {
 
         final Drug drug = new Drug();
+        final Substance substance = new Substance();
         final String debugString = " Object Drug " + drug + " created.";
+
+        substance.setName(request.getParameter("substance_name"));
+
+        drug.setName(request.getParameter("drug_name"));
+        drug.setDescription(request.getParameter("description"));
+        drug.setSubstance(substance);
 
         logger.log(Level.DEBUG, debugString);
 
@@ -64,10 +73,18 @@ public final class DrugFactory implements EntityFactory<Drug> {
      * {@inheritDoc}
      */
     @Override
-    public Drug createEntity(final ResultSet resultSet) {
+    public Drug createEntity(final ResultSet resultSet)
+            throws SQLException {
 
         final Drug drug = new Drug();
         final String debugString = " Object Drug " + drug + " created.";
+
+        drug.setId(resultSet.getInt("id"));
+        drug.setName(resultSet.getString("name"));
+        drug.setDescription(resultSet.getString("description"));
+        drug.setSubstance(new Substance() {{
+            this.setName(resultSet.getString("substance_name"));
+        }});
 
         logger.log(Level.DEBUG, debugString);
 

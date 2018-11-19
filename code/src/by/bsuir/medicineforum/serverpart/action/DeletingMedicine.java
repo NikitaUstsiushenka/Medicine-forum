@@ -1,5 +1,9 @@
 package by.bsuir.medicineforum.serverpart.action;
 
+import by.bsuir.medicineforum.database.DrugDao;
+import by.bsuir.medicineforum.database.dao.AbstractDao;
+import by.bsuir.medicineforum.exception.ApplicationException;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,7 +39,23 @@ public final class DeletingMedicine implements Action {
     public void execute(final HttpServletRequest request,
                         final HttpServletResponse response) {
 
+        final String drugName = request.getParameter("drug_name");
+        final AbstractDao dao = new DrugDao();
 
+        try {
+
+            if (((DrugDao) dao).delete(drugName)) {
+
+            } else {
+
+            }
+
+        } catch (ApplicationException e) {
+
+            logger.log(Level.ERROR, e.getMessage());
+            e.printStackTrace();
+
+        }
 
     }
 

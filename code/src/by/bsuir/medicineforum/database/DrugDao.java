@@ -33,21 +33,27 @@ public final class DrugDao extends AbstractDrugDao {
     /**
      * Value of the sql query for select all drugs from database.
      */
-    private static final String SELECT_ALL_DRUGS
-            = "SELECT d.`id`, d.`name`, d.`description`, s.`name` "
-            + "`substance_name` FROM `drug` d INNER JOIN `substance` s "
-            + "ON s.`id` = d.`substance_id`";
+    private static final String SELECT_ALL_DRUGS;
 
     /**
      * Value of the sql query that inserts drug.
      */
     private static final String INSERT_DRUG;
 
+    /**
+     * Value of the sql query that deletes drug from database.
+     */
+    private static final String DELETE_DRUG;
+
     static {
 
+        SELECT_ALL_DRUGS = "SELECT d.`id`, d.`name`, d.`description`, s.`name`"
+                + " `substance_name` FROM `drug` d INNER JOIN `substance` s "
+                + "ON s.`id` = d.`substance_id`";
         INSERT_DRUG = "INSERT INTO `drug` (`substance_id`, `name`, "
                 + "`description`) VALUES((SELECT `id` "
-                + "FROM `substance` WHERE `name` = ?), ?, ?)";
+                + "FROM `substance` s WHERE s.`name` = ?), ?, ?)";
+        DELETE_DRUG = "DELETE FROM `drug` WHERE name = ?";
 
     }
 
@@ -84,6 +90,8 @@ public final class DrugDao extends AbstractDrugDao {
                 drugs.add((Drug) factory.createEntity(resultSet));
             }
 
+            System.out.println(drugs);
+
         } catch (SQLException e) {
             throw new ApplicationException(e.getMessage());
         } finally {
@@ -105,9 +113,6 @@ public final class DrugDao extends AbstractDrugDao {
     @Override
     public void insert(final Drug drug) throws ApplicationException {
 
-        final String errorString = " Drug type is incorrect.";
-        final String debugString;
-
         Connection connection = null;
         PreparedStatement statement = null;
 
@@ -119,6 +124,8 @@ public final class DrugDao extends AbstractDrugDao {
             statement.setString(1, drug.getSubstance().getName());
             statement.setString(2, drug.getName());
             statement.setString(3, drug.getDescription());
+
+            statement.executeUpdate();
 
         } catch (SQLException e) {
             throw new ApplicationException(e.getMessage());
@@ -137,6 +144,39 @@ public final class DrugDao extends AbstractDrugDao {
     @Override
     public void update(final Drug drug) {
 
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean delete(final String name) throws ApplicationException {
+
+        final int countRows;
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+
+            connection = ConnectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(DELETE_DRUG);
+
+            statement.setString(1, name);
+
+            countRows = statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new ApplicationException(e.getMessage());
+        } finally {
+
+            super.close(statement);
+            super.close(connection);
+
+        }
+
+        return countRows != 0;
 
     }
 
