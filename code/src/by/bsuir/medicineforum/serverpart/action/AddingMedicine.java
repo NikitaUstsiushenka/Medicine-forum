@@ -25,7 +25,7 @@ import java.util.List;
  * @version 1.0
  * @since 14.11.2018
  */
-public final class AddingMedicine implements Action {
+public class AddingMedicine implements Action {
 
     /**
      * Logger for debug and error.

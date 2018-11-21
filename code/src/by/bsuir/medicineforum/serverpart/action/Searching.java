@@ -16,13 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class implements interface "Action" for deleting drug.
+ * This class implements  interface "Action" for searching drugs.
  *
  * @author Nikita
- * @version 1.0
- * @since 14.11.2018
+ * @since 20.11.2018
  */
-public class DeletingMedicine implements Action {
+public class Searching implements Action {
 
     /**
      * Logger for debug and error.
@@ -32,28 +31,33 @@ public class DeletingMedicine implements Action {
     /**
      * Public default constructor.
      */
-    public DeletingMedicine() {
+    public Searching() {
 
-        logger = LogManager.getLogger(DeletingMedicine.class);
+        logger = LogManager.getLogger(Searching.class);
 
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public void execute(final HttpServletRequest request,
                         final HttpServletResponse response)
             throws IOException, ServletException {
 
-        final String drugName = request.getParameter("medicine_name");
         final AbstractDao dao = new DrugDao();
+        final String debugString;
 
         List<Drug> drugs = new ArrayList<>();
 
         try {
 
-            ((DrugDao) dao).delete(drugName);
-            drugs = ((DrugDao) dao).select();
+            drugs = ((DrugDao) dao).select(
+                    request.getParameter("drug_name"));
+            debugString = " Search by name is completed.";
+
+
+            logger.log(Level.DEBUG, debugString);
 
         } catch (ApplicationException e) {
 
@@ -62,9 +66,8 @@ public class DeletingMedicine implements Action {
 
         }
 
-        request.getSession().removeAttribute("drugs");
         request.getSession().setAttribute("drugs", drugs);
-        request.getRequestDispatcher("/WEB-INF/jsp/admin.jsp")
+        request.getRequestDispatcher("/main.jsp")
                 .forward(request, response);
 
     }

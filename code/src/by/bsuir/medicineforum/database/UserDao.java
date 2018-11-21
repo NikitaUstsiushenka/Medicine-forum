@@ -22,7 +22,7 @@ import java.util.List;
  * @version 1.0
  * @since 05.11.2018
  */
-public final class UserDao extends AbstractUserDao {
+public class UserDao extends AbstractUserDao {
 
     /**
      * Logger for debug and error.

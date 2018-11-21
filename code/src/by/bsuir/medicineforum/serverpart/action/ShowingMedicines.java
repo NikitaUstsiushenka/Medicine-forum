@@ -19,7 +19,7 @@ import java.io.IOException;
  * @version 1.0
  * @since 14.11.2018
  */
-public final class ShowingMedicines implements Action {
+public class ShowingMedicines implements Action {
 
     /**
      * Logger for debug and error.
@@ -50,7 +50,7 @@ public final class ShowingMedicines implements Action {
             request.getSession().setAttribute("drugs",
                     ((DrugDao) dao).select());
             request.getRequestDispatcher(
-                    "/index.jsp")
+                    "/WEB-INF/jsp/drugs.jsp")
                     .forward(request, response);
 
         } catch (ApplicationException e) {

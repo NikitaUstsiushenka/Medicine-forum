@@ -19,7 +19,7 @@ import java.io.IOException;
  * @version 1.0
  * @since 29.10.2018
  */
-public final class Encoding implements Filter {
+public class Encoding implements Filter {
 
     /**
      * Logger for debug.

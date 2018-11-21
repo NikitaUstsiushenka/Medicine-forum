@@ -1,5 +1,6 @@
 package by.bsuir.medicineforum.serverpart.servlets;
 
+import by.bsuir.medicineforum.database.DrugDao;
 import by.bsuir.medicineforum.exception.ApplicationException;
 import by.bsuir.medicineforum.serverpart.action.*;
 import org.apache.logging.log4j.Level;
@@ -19,7 +20,7 @@ import java.io.IOException;
  * @version 1.0
  * @since 29.10.2018
  */
-public final class Controller extends HttpServlet {
+public class Controller extends HttpServlet {
 
     /**
      * Logger for debug and error.
@@ -80,8 +81,8 @@ public final class Controller extends HttpServlet {
 
         final Action action;
         final String clientAction = request.getParameter("action");
-        final String errorString = "";
-        final String debugString = "";
+        final String errorString = "Action type is incorrect.";
+        final String debugString = "Attribute is null.";
 
         if (clientAction != null) {
 
@@ -110,6 +111,26 @@ public final class Controller extends HttpServlet {
                 case "change_medicine":
                     action = new ChangingMedicine();
                     action.execute(request, response);
+                    break;
+                case "search_medicine":
+                    action = new Searching();
+                    action.execute(request, response);
+                    break;
+                case "back_admin":
+                    request.getRequestDispatcher("/WEB-INF/jsp/admin.jsp")
+                            .forward(request, response);
+                    break;
+                case "back_user":
+                    request.getRequestDispatcher("/index.jsp")
+                            .forward(request, response);
+                    break;
+                case "all":
+                    request.getSession().removeAttribute("drugs");
+                    request.getSession()
+                            .setAttribute("drugs", new DrugDao().select());
+                    request.getRequestDispatcher("/main.jsp")
+                            .forward(request, response);
+                    break;
                 default:
                     throw new ApplicationException(errorString);
 

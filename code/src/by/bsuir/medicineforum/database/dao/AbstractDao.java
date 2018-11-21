@@ -53,8 +53,9 @@ public abstract class AbstractDao<T extends AbstractEntity> {
      * This method updates some element from database.
      *
      * @param object value of the object that extends AbstractEntity class
+     * @throws ApplicationException throw SQLException
      */
-    protected abstract void update(T object);
+    protected abstract void update(T object) throws ApplicationException;
 
     /**
      * This method close connection with database.

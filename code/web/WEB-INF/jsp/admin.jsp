@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="by.bsuir.medicineforum.database.DrugDao" %>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -35,8 +36,8 @@
                                maxlength="20" placeholder="Enter substance name" required>
                     </div>
                     <div class="form-group">
-                        <label for="description"><c:out value="Description:"/></label>
-                        <textarea class="form-control" rows="5" id="description" name="description"></textarea>
+                        <label for="description1"><c:out value="Description:"/></label>
+                        <textarea class="form-control" rows="5" id="description1" name="description"></textarea>
                     </div>
                     <div>
                         <input type="hidden" name="action" value="add_medicine">
@@ -48,33 +49,86 @@
         </div>
     </div>
 </div>
-<div id="modal_add_drugs" class="modal fade">
+<div id="modal_delete_drug" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title"><c:out value="Add Medicines"/></h4>
+                <h4 class="modal-title"><c:out value="Delete Medicine"/></h4>
                 <button type="button" class="close" data-dismiss="modal">×</button>
             </div>
             <div class="modal-body">
-                <form method="post" action="pharmacy">
+                <c:set var="dao" value="${DrugDao()}"/>
+                <c:set var="drugs" value="${dao.select()}"/>
+                <c:if test="${drugs.size() != 0}">
+                    <form method="post" action="pharmacy">
+                        <div class="form-group">
+                            <select id="combobox1" class="combobox" name="medicine_name">
+                                <c:forEach var="drug" items="${drugs}">
+                                    <option value="${drug.getName()}">${drug.getName()}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div>
+                            <input type="hidden" name="action" value="delete_medicine">
+                            <input type="submit" class="btn btn-info" value="Delete">
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><c:out
+                                    value="Close"/></button>
+                        </div>
+                    </form>
+                </c:if>
+                <c:if test="${drugs.size() == 0}">
                     <div class="form-group">
-                    </div>
-                    <div class="form-group">
-                        <label for="drug_dosage"><c:out value="Dosage(Mg):"/></label>
-                        <input type="number" class="form-control" name="dosage" id="drug_dosage" min="1" max="20000"
-                               maxlength="5" placeholder="Enter medicine dosage" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="add_count"><c:out value="Count:"/></label>
-                        <input type="number" class="form-control" name="count" id="add_count" min="1"
-                               placeholder="Enter medicine count" required>
+                        <label><c:out value="List of medicines is empty."/></label>
                     </div>
                     <div>
-                        <input type="hidden" name="action" value="increase_amount">
-                        <input type="submit" class="btn btn-info" value="Add">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><c:out
+                                value="Close"/></button>
                     </div>
-                </form>
+                </c:if>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modal_change_drug" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><c:out value="Change Medicine"/></h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <div class="modal-body">
+                <c:set var="dao" value="${DrugDao()}"/>
+                <c:set var="drugs" value="${dao.select()}"/>
+                <c:if test="${drugs.size() != 0}">
+                    <form method="post" action="pharmacy">
+                        <div class="form-group">
+                            <select id="combobox2" class="combobox" name="medicine_name">
+                                <c:forEach var="drug" items="${drugs}">
+                                    <option value="${drug.getName()}">${drug.getName()}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="description2"><c:out value="Description:"/></label>
+                            <textarea class="form-control" rows="5" id="description2" name="description"></textarea>
+                        </div>
+                        <div>
+                            <input type="hidden" name="action" value="change_medicine">
+                            <input type="submit" class="btn btn-info" value="Change">
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><c:out
+                                    value="Close"/></button>
+                        </div>
+                    </form>
+                </c:if>
+                <c:if test="${drugs.size() == 0}">
+                    <div class="form-group">
+                        <label><c:out value="List of medicines is empty."/></label>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-default" data-dismiss="modal"><c:out
+                                value="Close"/></button>
+                    </div>
+                </c:if>
             </div>
         </div>
     </div>
@@ -97,11 +151,12 @@
                 title="Add medicine in database"><c:out value="Add Medicine"/></button>
     </div>
     <div id="delete_medicine">
-        <button class="btn btn-info menu"
+        <button class="btn btn-info menu" data-toggle="modal" data-target="#modal_delete_drug"
                 title="Delete medicine from database"><c:out value="Delete Medicine"/></button>
     </div>
     <div id="change_medicine">
-        <button class="btn btn-info menu" title="Change info about medicine"><c:out value="Change Medicine"/></button>
+        <button class="btn btn-info menu" data-toggle="modal" data-target="#modal_change_drug"
+                title="Change info about medicine"><c:out value="Change Medicine"/></button>
     </div>
     <div id="logout">
         <form method="post" action="pharmacy">

@@ -31,7 +31,7 @@
             <button class="btn btn-info" type="submit"><c:out value="Sign in"/></button>
         </p>
     </form>
-    <p><a href="WEB-INF/jsp/admin.jsp"><c:out value="Continue without authorization?"/></a></p>
+    <p><a href="main.jsp"><c:out value="Continue without authorization?"/></a></p>
 </div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -7,7 +7,7 @@ package by.bsuir.medicineforum.exception;
  * @version 1.0
  * @since 31.10.2018
  */
-public final class ApplicationException extends Exception {
+public class ApplicationException extends Exception {
 
     /**
      * Public default constructor.

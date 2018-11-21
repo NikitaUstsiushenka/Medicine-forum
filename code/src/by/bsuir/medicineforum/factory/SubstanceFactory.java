@@ -16,7 +16,7 @@ import java.sql.ResultSet;
  * @version 1.0
  * @since 03.11.2018
  */
-public final class SubstanceFactory implements EntityFactory<Substance> {
+public class SubstanceFactory implements EntityFactory<Substance> {
 
     /**
      * Logger for debug.

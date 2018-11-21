@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
  * @version 1.0
  * @since 02.11.2018
  */
-public final class Drug extends AbstractEntity {
+public class Drug extends AbstractEntity {
 
     /**
      * Logger for debug.

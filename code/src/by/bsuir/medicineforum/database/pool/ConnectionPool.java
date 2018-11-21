@@ -19,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * @version 1.0
  * @since 11.09.2018
  */
-public final class ConnectionPool {
+public class ConnectionPool {
 
     /**
      * Logger for debug and errors.

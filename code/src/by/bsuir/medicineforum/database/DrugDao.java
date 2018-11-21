@@ -14,8 +14,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
-
 /**
  * This class implements methods for work with table 'drug'.
  *
@@ -23,7 +21,7 @@ import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
  * @version 1.0
  * @since 05.11.2018
  */
-public final class DrugDao extends AbstractDrugDao {
+public class DrugDao extends AbstractDrugDao {
 
     /**
      * Logger for debug and error.
@@ -36,6 +34,11 @@ public final class DrugDao extends AbstractDrugDao {
     private static final String SELECT_ALL_DRUGS;
 
     /**
+     * Value of the sql query for select drugs by name from database.
+     */
+    private static final String SELECT_BY_NAME;
+
+    /**
      * Value of the sql query that inserts drug.
      */
     private static final String INSERT_DRUG;
@@ -45,15 +48,24 @@ public final class DrugDao extends AbstractDrugDao {
      */
     private static final String DELETE_DRUG;
 
+    /**
+     * Value of the sql query that updates drug in database.
+     */
+    private static final String UPDATE_DRUG;
+
     static {
 
         SELECT_ALL_DRUGS = "SELECT d.`id`, d.`name`, d.`description`, s.`name`"
                 + " `substance_name` FROM `drug` d INNER JOIN `substance` s "
                 + "ON s.`id` = d.`substance_id`";
+        SELECT_BY_NAME = "SELECT d.`id`, d.`name`, d.`description`, s.`name`"
+                + " `substance_name` FROM `drug` d INNER JOIN `substance` s "
+                + "ON s.`id` = d.`substance_id` WHERE d.`name` = ?";
         INSERT_DRUG = "INSERT INTO `drug` (`substance_id`, `name`, "
                 + "`description`) VALUES((SELECT `id` "
                 + "FROM `substance` s WHERE s.`name` = ?), ?, ?)";
         DELETE_DRUG = "DELETE FROM `drug` WHERE name = ?";
+        UPDATE_DRUG = "UPDATE `drug` SET `description` = ? WHERE `name` = ?";
 
     }
 
@@ -90,7 +102,48 @@ public final class DrugDao extends AbstractDrugDao {
                 drugs.add((Drug) factory.createEntity(resultSet));
             }
 
-            System.out.println(drugs);
+        } catch (SQLException e) {
+            throw new ApplicationException(e.getMessage());
+        } finally {
+
+            super.close(statement);
+            super.close(connection);
+
+        }
+
+        logger.log(Level.DEBUG, debugString);
+
+        return drugs;
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Drug> select(final String name)
+            throws ApplicationException {
+
+        final List<Drug> drugs = new ArrayList<>();
+        final EntityFactory factory = new DrugFactory();
+        final ResultSet resultSet;
+        final String debugString = " All drugs selected from table `drug`.";
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+
+            connection = ConnectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(SELECT_BY_NAME);
+
+            statement.setString(1, name);
+
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                drugs.add((Drug) factory.createEntity(resultSet));
+            }
 
         } catch (SQLException e) {
             throw new ApplicationException(e.getMessage());
@@ -142,8 +195,29 @@ public final class DrugDao extends AbstractDrugDao {
      * {@inheritDoc}
      */
     @Override
-    public void update(final Drug drug) {
+    public void update(final Drug drug) throws ApplicationException {
 
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+
+            connection = ConnectionPool.getInstance().getConnection();
+            statement = connection.prepareStatement(UPDATE_DRUG);
+
+            statement.setString(1, drug.getDescription());
+            statement.setString(2, drug.getName());
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new ApplicationException(e);
+        } finally {
+
+            super.close(statement);
+            super.close(connection);
+
+        }
 
     }
 

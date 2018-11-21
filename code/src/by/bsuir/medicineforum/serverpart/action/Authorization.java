@@ -20,7 +20,7 @@ import java.io.IOException;
  * @version 1.0
  * @since 08.11.2018
  */
-public final class Authorization implements Action {
+public class Authorization implements Action {
 
     /**
      * Logger for debug and error.

@@ -16,7 +16,7 @@ import java.sql.ResultSet;
  * @version 1.0
  * @since 03.11.2018
  */
-public final class UserFactory implements EntityFactory<User> {
+public class UserFactory implements EntityFactory<User> {
 
     /**
      * Logger for debug.

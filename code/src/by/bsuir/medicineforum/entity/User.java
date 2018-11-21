@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
  * @version 1.0
  * @since 02.11.2018
  */
-public final class User extends AbstractEntity {
+public class User extends AbstractEntity {
 
     /**
      * Logger for debug.

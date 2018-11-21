@@ -22,7 +22,7 @@ import java.util.List;
  * @version 1.0
  * @since 05.11.2018
  */
-public final class SubstanceDao extends AbstractSubstanceDao {
+public class SubstanceDao extends AbstractSubstanceDao {
 
     /**
      * Logger for debug and errors.

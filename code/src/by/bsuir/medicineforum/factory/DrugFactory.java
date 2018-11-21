@@ -17,7 +17,7 @@ import java.sql.SQLException;
  * @version 1.0
  * @since 03.11.2018
  */
-public final class DrugFactory implements EntityFactory<Drug> {
+public class DrugFactory implements EntityFactory<Drug> {
 
     /**
      * Logger for debug.
