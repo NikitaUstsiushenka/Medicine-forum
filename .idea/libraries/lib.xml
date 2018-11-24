@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/code/web/WEB-INF/lib/javax.servlet.jsp.jstl-1.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/code/web/WEB-INF/lib/javax.servlet-2.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/code/web/WEB-INF/lib/log4j-api-2.11.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/code/web/WEB-INF/lib/log4j-core-2.11.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/code/web/WEB-INF/lib/javax.servlet.jsp.jstl-api-1.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/code/web/WEB-INF/lib/mysql-connector-java-5.1.45-bin.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
